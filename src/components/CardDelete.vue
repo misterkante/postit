@@ -3,13 +3,13 @@
     <v-dialog v-model="dialog" max-width="400">
       <template v-slot:activator="{ props: activatorProps }">
         <v-btn
-          color="red"
+          color="error"
           v-bind="activatorProps"
           prepend-icon="mdi-delete"
           text
           class="ml-4"
         >
-          Delete
+          Supprimer tout
         </v-btn>
       </template>
 
