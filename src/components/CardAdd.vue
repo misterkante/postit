@@ -4,6 +4,7 @@
       <template v-slot:activator="{ props: activatorProps }">
         <v-btn
           v-bind="activatorProps"
+          class="addButton"
           color="primary"
           prepend-icon="mdi-plus"
           text
@@ -72,6 +73,10 @@ const formValues = ref({
 
 const handleSubmit = async () => {
   emit("onAdd", { ...formValues.value, content: [formValues.value.content] });
+  formValues.value = {
+    title: "",
+    content: "",
+  };
   dialog.value = false;
 };
 </script>

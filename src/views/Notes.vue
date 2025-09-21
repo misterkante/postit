@@ -120,9 +120,7 @@
               </g>
             </svg>
           </div>
-          <h1
-            class="text-lg font-semibold mb-4 text-[#6366f1] dark:text-[#818cf8]"
-          >
+          <h1 class="text-lg font-semibold text-[#6366f1] dark:text-[#818cf8]">
             Aucune note pour le moment.
           </h1>
           <p class="text-md font-lighter">
