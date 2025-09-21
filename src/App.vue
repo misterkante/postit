@@ -4,12 +4,12 @@
       class="bg-grey-light fixed top-0 left-0 w-full z-50 transition-all duration-300"
     >
       <router-link to="/"
-        ><button class="flex flex-col text-3xl justify-start items-start">
+        ><div class="flex flex-col text-3xl justify-start items-start">
           <span>📑 Mes Post-Its</span>
           <span class="text-xs text-grey-dark text-light mt-1"
             >Organisez vos idées, simplement et efficacement</span
           >
-        </button></router-link
+        </div></router-link
       >
     </nav>
     <v-main>
