@@ -9,19 +9,8 @@ export const useNoteStore = defineStore("note", () => {
   const isLoading = ref(false);
   const error = ref(null);
   // constante
-  const colors = [
-    "transparent",
-    "#f1f5f8",
-    "#f9acaa",
-    "#fcd9b6",
-    "#fff9c2",
-    "#a2f5bf",
-    "#a0f0ed",
-    "#bcdefa",
-    "#b2b7ff",
-    "#d6bbfc",
-    "#ffbbca",
-  ];
+  const colors = ["#F0F8FF", "#F5FFFA", "#FFFAEE", "#FFF0F5", "#F8F8FF"];
+
   /**
    * getAllNote : fonction de récupération de stockage des notes dans le store
    */
@@ -67,17 +56,20 @@ export const useNoteStore = defineStore("note", () => {
    *updateNote : fonction de modification de la note via l'api et mets à jour le store et le localStorage
    * @param {*} item :note passé depuis l'URL sous forme d'objet
    */
-  async function updateNote(item) {
+  async function updateNote(id, item) {
     isLoading.value = true;
-    const response = await put(item._id, item);
+    const response = await put(id, item);
     if (typeof response === "object") {
-      notes.value = notes.value.forEach((element, index) => {
-        if (element.id === item.id) {
-          notes[index] = item;
-        }
-      });
-      localStorage.setItem("notes", JSON.stringify(notes.value));
-      error.value = null;
+      const index = notes.value.findIndex((element) => element._id === id);
+      if (index !== -1) {
+        notes.value[index] = {
+          ...notes.value[index],
+          title: item.title,
+          content: item.content,
+        };
+        localStorage.setItem("notes", JSON.stringify(notes.value));
+        error.value = null;
+      }
     } else {
       error.value = response;
     }
@@ -92,7 +84,7 @@ export const useNoteStore = defineStore("note", () => {
     isLoading.value = true;
     const response = await destroy(itemID);
     if (typeof response === "object") {
-      notes.value = notes.value.filter((element) => element.id !== itemID);
+      notes.value = notes.value.filter((element) => element._id !== itemID);
       localStorage.setItem("notes", JSON.stringify(notes.value));
       error.value = null;
     } else {
@@ -104,8 +96,21 @@ export const useNoteStore = defineStore("note", () => {
   /**
    * deleteAllNote : fonction qui vide le store et mets à jour le localStorage
    */
-  function deleteAllNote() {
+  async function deleteAllNote() {
+    let total = notes.value.length;
+    let deleted = 0;
     isLoading.value = true;
+    for (let note in notes) {
+      let response = await destroy(note._id);
+      if (typeof response === "object") {
+        deleted++;
+      }
+    }
+    if (deleted < total) {
+      error.value = `Erreur lors de la suppression : Seul ${deleted} / ${total} ont été supprimés`;
+    } else {
+      error.value = null;
+    }
     notes.value = [];
     localStorage.setItem("notes", JSON.stringify([]));
     error.value = null;
