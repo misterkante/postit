@@ -61,7 +61,7 @@
                 <v-card-title>{{ item.title }}</v-card-title>
                 <v-card-subtitle>{{ item.content[0] }}</v-card-subtitle>
                 <v-card-text class="text-right text-2xs"
-                  >.{{ item.content[0].length }}</v-card-text
+                  >.{{ item.content[0].length }} car</v-card-text
                 >
               </v-card>
             </router-link>
